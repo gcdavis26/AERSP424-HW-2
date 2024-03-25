@@ -1,5 +1,6 @@
 #include "Sensor.h"
 #include <iostream>
+#include <memory>
 
 Altimeter::Altimeter()
 {
@@ -59,4 +60,27 @@ void FuelLevel::gatherData()
 {
 	std::cout << "Gathering data from the FuelLevel Sensor" << std::endl;
 
+}
+
+std::unique_ptr<Sensor> SensorFactory::createSensor(std::string sensortype)
+{
+	std::unique_ptr<Sensor> ptr;
+	if (sensortype == "Altimeter")
+	{
+		ptr = std::make_unique<Altimeter>();
+	}
+	else if (sensortype == "Thermometer")
+	{
+		ptr = std::make_unique<Thermometer>();
+	}
+	else if (sensortype == "FuelLevel")
+	{
+		ptr = std::make_unique<FuelLevel>();
+	}
+	else
+	{
+		ptr = nullptr;
+	}
+
+	return ptr;
 }

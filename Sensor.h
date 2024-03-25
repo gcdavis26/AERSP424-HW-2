@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 #ifndef SENSOR_H
 #define SENSOR_H
@@ -40,4 +41,11 @@ public:
 
 };
 
+class SensorFactory {
+public:
+	SensorFactory();
+	~SensorFactory();
+
+	static std::unique_ptr<Sensor> createSensor(std::string);
+};
 #endif SENSOR_H
