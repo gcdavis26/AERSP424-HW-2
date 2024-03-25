@@ -1,6 +1,10 @@
 #include "Sensor.h"
 #include <iostream>
 #include <memory>
+#include <string>
+
+
+// Altimeter class
 
 Altimeter::Altimeter()
 {
@@ -8,7 +12,7 @@ Altimeter::Altimeter()
 }
 Altimeter::~Altimeter()
 {
-	std::cout << "Altimeter off";
+	std::cout << "Altimeter off" << std::endl;
 }
 
 void Altimeter::processData()
@@ -22,13 +26,15 @@ void Altimeter::gatherData()
 
 }
 
+//Thermometer class
+
 Thermometer::Thermometer()
 {
 	std::cout << "Thermometer on" << std::endl;
 }
 Thermometer::~Thermometer()
 {
-	std::cout << "Thermometer off";
+	std::cout << "Thermometer off" << std::endl;
 }
 
 void Thermometer::processData()
@@ -41,6 +47,7 @@ void Thermometer::gatherData()
 	std::cout << "Gathering data from the Thermometer Sensor" << std::endl;
 }
 
+//Fuel level class
 
 FuelLevel::FuelLevel()
 {
@@ -48,7 +55,7 @@ FuelLevel::FuelLevel()
 }
 FuelLevel::~FuelLevel()
 {
-	std::cout << "FuelLevel off";
+	std::cout << "FuelLevel off" << std::endl;
 }
 
 void FuelLevel::processData()
@@ -62,20 +69,23 @@ void FuelLevel::gatherData()
 
 }
 
-std::unique_ptr<Sensor> SensorFactory::createSensor(std::string sensortype)
+// Sensor factory class
+
+
+std::shared_ptr<Sensor> SensorFactory::createSensor(std::string sensortype)
 {
-	std::unique_ptr<Sensor> ptr;
+	std::shared_ptr<Sensor> ptr;
 	if (sensortype == "Altimeter")
 	{
-		ptr = std::make_unique<Altimeter>();
+		ptr = std::make_shared<Altimeter>();
 	}
 	else if (sensortype == "Thermometer")
 	{
-		ptr = std::make_unique<Thermometer>();
+		ptr = std::make_shared<Thermometer>();
 	}
 	else if (sensortype == "FuelLevel")
 	{
-		ptr = std::make_unique<FuelLevel>();
+		ptr = std::make_shared<FuelLevel>();
 	}
 	else
 	{
@@ -83,4 +93,22 @@ std::unique_ptr<Sensor> SensorFactory::createSensor(std::string sensortype)
 	}
 
 	return ptr;
+}
+
+// AerospaceControlSystem
+void AerospaceControlSystem::addSensor(std::string type)
+{
+	sensorArray.push_back(SensorFactory::createSensor(type));
+}
+
+void AerospaceControlSystem::monitorAndAdjust()
+{
+	for (auto iter : sensorArray)
+	{
+		(*iter.get()).gatherData();
+		(*iter.get()).processData();
+
+		std::cout << "Adjusting controls based on sensor data" << std::endl;
+
+	}
 }
