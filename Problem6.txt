@@ -1,0 +1,5 @@
+Problem 6:
+
+The instantaneous nature of the problem allows us to easily check the state of objects. I used a queue for my traffic pattern, so to join the queue I first made the plane lock that mutex, then check how full the queue is, then allowed the plane to join the queue. This way every time a plane checked to see if the traffic pattern was full or not, it got an accurate result (resources were properly protected using mutex). If I added delays to this joining, it would not wreck the entire program but would likely make the whole task of joining the pattern take a while for the planes. 
+
+In all, the use of mutexes allows us to lock the mutex first, then add in a wait time, thus mostly mitigating the impacts of additional delays in certain tasks. For instance, if the ATC takes 5 seconds to wake up when contacted, the first to contact can lock the mutex immediate, then wait 5 seconds, etc. and then the program works as planned. In general, adding delays into the program shouldn't be hard as long as mutexes are properly handled. 

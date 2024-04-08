@@ -1,0 +1,7 @@
+Problem 5:
+
+This question kind of depends on how the problem is interpreted. In my case, I chunked #2 into 3 main parts: First the robot grabs the tools, then it does the task (which is basically just waiting for a few seconds), then it returns the tools. If, in my implementation, a robot was assigned another task right after, it would just do that task without any issue: It hasn't returned the tools yet, so there's nothing stopping to from just doing another task.
+
+However, if the problem was chunked into two steps instead: First grab tools, then do task + return tools, an issue could arise. The robot grabs the tools, locking their mutexes, and then does the task and returns the tools. Now it is told to do another task... but it doesn't have the tools, so now it's kind of in limbo. A solution to this would be to check if a robot has tools prior to starting a task, and if it doesn't, to call the grab command.
+
+Yet another interpretation would be to chunk grabbing the tools and starting the task together, and then the second step is to return the tools. In this case, The robot would grab the tools and lock them, do the task, and then immediately try to grab the tools again. However, since it already has the tools, it would be be in a deadlock since it's waiting for the tools to be released but it has the tools. The way to fix this would simply be to implement it like I did, splitting up the task and the tool grabbing into two separate parts, or to check if the robot already has the tools before trying to grab them.
