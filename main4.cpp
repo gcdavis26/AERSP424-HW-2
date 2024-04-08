@@ -38,7 +38,7 @@ int main() {
         for (int deg = 0; deg < 1440; deg++)
         {
             glColor3f(cos(static_cast<float>(deg) * pi / 180), sin(static_cast<float>(deg) * pi / 180), .5); //color modulation
-            float x = cos(static_cast<float>(deg)* pi/180)*deg/1440;
+            float x = cos(static_cast<float>(deg)* pi/180)*deg/1440; //basically the amplitude of the sin and cosin keep increasing up to 1
             float y = sin(static_cast<float>(deg) * pi / 180)*deg/1440;
             //std::cout << "x: " << x << "  y: " << y << "   " << deg << std::endl;
             glVertex2f(starting_x, starting_y);

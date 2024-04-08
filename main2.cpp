@@ -4,7 +4,7 @@
 
 
 
-void task(Robot& robot, Tool& tool1, Tool& tool2)
+void task(Robot& robot, Tool& tool1, Tool& tool2) //first grab, then sleep, then release
 {
 	robot.grab(tool1, tool2);
 	std::this_thread::sleep_for(std::chrono::seconds(5));

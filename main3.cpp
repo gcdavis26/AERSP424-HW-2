@@ -11,7 +11,7 @@ void task(Plane& plane, ATC& atc)
 		{
 			atc.comms.lock();
 			plane.land(atc);
-			plane.inLine = false;
+			plane.inLine = false; //gets us out of this loop
 			atc.comms.unlock();
 			atc.traffic.pop(); //move up the queue
 		}

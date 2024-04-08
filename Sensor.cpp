@@ -98,12 +98,12 @@ std::shared_ptr<Sensor> SensorFactory::createSensor(std::string sensortype)
 // AerospaceControlSystem
 void AerospaceControlSystem::addSensor(std::string type)
 {
-	sensorArray.push_back(SensorFactory::createSensor(type));
+	sensorArray.push_back(SensorFactory::createSensor(type)); //add sensor to vector of senso pointers
 }
 
 void AerospaceControlSystem::monitorAndAdjust()
 {
-	for (auto iter : sensorArray)
+	for (auto iter : sensorArray) // go through vector and call functions for each sensor
 	{
 		(*iter.get()).gatherData();
 		(*iter.get()).processData();
